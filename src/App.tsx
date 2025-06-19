@@ -1,11 +1,11 @@
-import { Button } from "./components/Button/Button";
+import StartCapture from "./components/StartCapture/StartCapture";
 import "./App.css";
 
 function App() {
   return (
     <>
       <div className="app">
-        <Button text="Scan ID" />
+        <StartCapture />
       </div>
     </>
   );

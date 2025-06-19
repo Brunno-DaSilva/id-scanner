@@ -1,13 +1,21 @@
 import "./button.css";
 
 type ButtonProps = {
-  text: string;
+  onClick: () => void;
+  disabled?: boolean;
+  children: React.ReactNode;
 };
 
-export const Button = ({ text }: ButtonProps) => {
+export const Button = ({
+  children,
+  onClick,
+  disabled = false,
+}: ButtonProps) => {
   return (
     <div className="button">
-      <button className="button__scan">{text}</button>
+      <button onClick={onClick} disabled={disabled} className="button__scan">
+        {children}
+      </button>
     </div>
   );
 };
