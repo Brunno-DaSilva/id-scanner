@@ -60,9 +60,8 @@ const StartCapture: React.FC = () => {
           <iframe
             src={captureUrl}
             title="Intellicheck Capture"
-            width="100%"
-            height="600"
-            style={{ border: "1px solid #ccc", borderRadius: "8px" }}
+            width="900"
+            height="900"
             allow="camera; microphone"
           />
         </div>
