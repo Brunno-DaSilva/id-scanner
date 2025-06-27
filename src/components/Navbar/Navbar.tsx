@@ -5,7 +5,7 @@ export const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar__logo">
-        <span>Purple Check</span>
+        <span>PurpleCheck</span>
         <CheckLogo size={30} color="#724ebf" />
       </div>
       <ul className="navbar__menu">

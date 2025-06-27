@@ -6,7 +6,6 @@
   --color-scheme: light dark;
   --color: #213547;
   --background-color: #fcfbfb;
-  --color: #424242
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -39,6 +38,8 @@ body {
   justify-content: center;
   width: 100vw;
   height: 100vh;
+  color: #213547;
+  font-family: var(--font-family);
 }
 
 h1 {

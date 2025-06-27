@@ -15,7 +15,7 @@
 .navbar__logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #222;
+  color: #724ebf;
 }
 
 .navbar__menu {
@@ -26,7 +26,7 @@
 
 .navbar__menu li a {
   text-decoration: none;
-  color: #555;
+  color: #213547;
   font-weight: 500;
   transition: color 0.2s ease;
 }
