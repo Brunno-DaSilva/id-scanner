@@ -49,7 +49,7 @@ const SMSFlowForm = () => {
 
   return (
     <>
-      <div className="SMSFlowFormContainer">
+      <div className="SMSFlowFormContainer" style={{ marginTop: "20px" }}>
         <div className="SMSFlowForm__img">
           <img src={formImage} alt="IMG" />
         </div>
@@ -120,10 +120,6 @@ const SMSFlowForm = () => {
             />
             Selfie Required
           </label>
-
-          <button type="submit" className="form-button">
-            Submit
-          </button>
         </form>
       </div>
     </>
