@@ -27,6 +27,8 @@ const SMSFlowForm = () => {
     signals: [],
   });
 
+  const [success, setSuccess] = useState<boolean>(false);
+
   const signalsList: SignalOption[] = [
     { value: "selfie", label: "Selfie" },
     { value: "idcheck", label: "Barcode" },
@@ -54,7 +56,12 @@ const SMSFlowForm = () => {
         body: JSON.stringify(formData),
       });
       if (res.ok) {
-        alert("Form submitted successfully");
+        setSuccess(true);
+
+        setTimeout(() => {
+          setSuccess(false);
+        }, 9000);
+
         setFormData({
           application_id: "",
           capture_language: "en-us",
@@ -75,93 +82,105 @@ const SMSFlowForm = () => {
     <>
       <div className="SMSFlowFormContainer" style={{ marginTop: "20px" }}>
         <div className="SMSFlowForm__img">
-          <img src={formImage} alt="IMG" />
+          {success ? <h1>✔️</h1> : <img src={formImage} alt="IMG" />}
         </div>
-        <form className="SMSFlowForm" onSubmit={handleSubmit}>
-          <h2 className="form-heading">📱Submit SMS Flow</h2>
+        {success ? (
+          <h2 className="form-success-message">
+            <span className="form-success-message__span-one">
+              {" "}
+              Form Complete successfully!
+            </span>
+            <span className="form-success-message__span-two">
+              Check your Phone to start the process
+            </span>
+          </h2>
+        ) : (
+          <form className="SMSFlowForm" onSubmit={handleSubmit}>
+            <h2 className="form-heading">📱Submit SMS Flow</h2>
 
-          <label className="form-label">
-            Application ID
-            <input
-              type="text"
-              name="application_id"
-              value={formData.application_id}
-              onChange={handleChange}
-              className="form-input"
-              required
-            />
-          </label>
+            <label className="form-label">
+              Application ID
+              <input
+                type="text"
+                name="application_id"
+                value={formData.application_id}
+                onChange={handleChange}
+                className="form-input"
+                required
+              />
+            </label>
 
-          <label className="form-label">
-            Language
-            <select
-              name="capture_language"
-              value={formData.capture_language}
-              onChange={handleChange}
-              className="form-select"
-            >
-              <option value="english">English</option>
-              <option value="spanish">Spanish</option>
-              <option value="french">French</option>
-            </select>
-          </label>
+            <label className="form-label">
+              Language
+              <select
+                name="capture_language"
+                value={formData.capture_language}
+                onChange={handleChange}
+                className="form-select"
+              >
+                <option value="english">English</option>
+                <option value="spanish">Spanish</option>
+                <option value="french">French</option>
+              </select>
+            </label>
 
-          <label className="form-label">
-            Document Type
-            <select
-              name="document_type"
-              value={formData.document_type}
-              onChange={handleChange}
-              className="form-select"
-            >
-              <option value="north_america_dl">
-                North America Driver's License
-              </option>
-              <option value="passport_booklet">Passport Booklet</option>
-              <option value="other_documents">Other Documents</option>
-            </select>
-          </label>
+            <label className="form-label">
+              Document Type
+              <select
+                name="document_type"
+                value={formData.document_type}
+                onChange={handleChange}
+                className="form-select"
+              >
+                <option value="north_america_dl">
+                  North America Driver's License
+                </option>
+                <option value="passport_booklet">Passport Booklet</option>
+                <option value="other_documents">Other Documents</option>
+              </select>
+            </label>
 
-          <label className="form-label">
-            Phone Number
-            <input
-              type="tel"
-              name="phone_number"
-              value={formData.phone_number}
-              onChange={handleChange}
-              className="form-input"
-              required
-            />
-          </label>
+            <label className="form-label">
+              Phone Number
+              <input
+                type="tel"
+                name="phone_number"
+                value={formData.phone_number}
+                onChange={handleChange}
+                className="form-input"
+                required
+              />
+            </label>
 
-          <fieldset className="form-fieldset">
-            <legend className="form-checkbox-label">Signals</legend>
-            {signalsList.map(({ value, label }) => (
-              <label key={value} className="form-checkbox-label">
-                <input
-                  type="checkbox"
-                  name="signals"
-                  value={value}
-                  checked={formData.signals.includes(value)}
-                  onChange={(e) => {
-                    const { checked, value } = e.target;
-                    setFormData((prev) => ({
-                      ...prev,
-                      signals: checked
-                        ? [...prev.signals, value]
-                        : prev.signals.filter((s) => s !== value),
-                    }));
-                  }}
-                  className="form-checkbox"
-                />
-                {label}
-              </label>
-            ))}
-          </fieldset>
-          <button type="submit" className="form-button">
-            Start Capture
-          </button>
-        </form>
+            <fieldset className="form-fieldset">
+              <legend className="form-checkbox-label">Signals</legend>
+              {signalsList.map(({ value, label }) => (
+                <label key={value} className="form-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="signals"
+                    value={value}
+                    checked={formData.signals.includes(value)}
+                    onChange={(e) => {
+                      const { checked, value } = e.target;
+                      setFormData((prev) => ({
+                        ...prev,
+                        signals: checked
+                          ? [...prev.signals, value]
+                          : prev.signals.filter((s) => s !== value),
+                      }));
+                    }}
+                    className="form-checkbox"
+                  />
+                  {label}
+                </label>
+              ))}
+            </fieldset>
+            <button type="submit" className="form-button">
+              Start Capture
+            </button>
+          </form>
+        )}
       </div>
     </>
   );
