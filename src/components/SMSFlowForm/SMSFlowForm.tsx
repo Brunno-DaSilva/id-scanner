@@ -3,20 +3,33 @@ import "./smsFlowForm.css"; // Import the CSS file
 import formImage from "../../assets/LifesaversHand.png"; // Import the image
 type FormData = {
   applicationId: string;
-  language: "english" | "spanish" | "french";
-  documentType: "north_america_dl" | "passport_booklet" | "other_documents";
+  language: "en_us" | "es_mx" | "fr_ca";
+  documentType: "na_dl" | "passport" | "other";
   phoneNumber: string;
-  selfieRequired: boolean;
+  signals: string[];
+};
+
+type SignalOption = {
+  value: string;
+  label: string;
 };
 
 const SMSFlowForm = () => {
   const [formData, setFormData] = useState<FormData>({
     applicationId: "",
-    language: "english",
-    documentType: "north_america_dl",
+    language: "en_us",
+    documentType: "na_dl",
     phoneNumber: "",
-    selfieRequired: false,
+    signals: [],
   });
+
+  const signalsList: SignalOption[] = [
+    { value: "selfie", label: "Selfie" },
+    { value: "barcode", label: "Barcode" },
+    { value: "ocr", label: "OCR" },
+    { value: "document_liveness", label: "Document Liveness" },
+    { value: "ocr_barcode_match", label: "OCR & Barcode Match" },
+  ];
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -110,16 +123,33 @@ const SMSFlowForm = () => {
             />
           </label>
 
-          <label className="form-checkbox-label">
-            <input
-              type="checkbox"
-              name="selfieRequired"
-              checked={formData.selfieRequired}
-              onChange={handleChange}
-              className="form-checkbox"
-            />
-            Selfie Required
-          </label>
+          <fieldset className="form-fieldset">
+            <legend className="form-checkbox-label">Signals</legend>
+            {signalsList.map(({ value, label }) => (
+              <label key={value} className="form-checkbox-label">
+                <input
+                  type="checkbox"
+                  name="signals"
+                  value={value}
+                  checked={formData.signals.includes(value)}
+                  onChange={(e) => {
+                    const { checked, value } = e.target;
+                    setFormData((prev) => ({
+                      ...prev,
+                      signals: checked
+                        ? [...prev.signals, value]
+                        : prev.signals.filter((s) => s !== value),
+                    }));
+                  }}
+                  className="form-checkbox"
+                />
+                {label}
+              </label>
+            ))}
+          </fieldset>
+          <button type="submit" className="form-button">
+            Start Capture
+          </button>
         </form>
       </div>
     </>

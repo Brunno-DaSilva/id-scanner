@@ -81,3 +81,8 @@
 .form-button:hover {
   background-color: #535bf2;
 }
+
+.form-fieldset {
+  margin: 1.5rem 0;
+  border: none;
+}
