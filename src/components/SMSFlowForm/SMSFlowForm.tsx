@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import "./smsFlowForm.css"; // Import the CSS file
 import formImage from "../../assets/LifesaversHand.png"; // Import the image
 type FormData = {
-  applicationId: string;
-  language: "en_us" | "es_mx" | "fr_ca";
-  documentType: "na_dl" | "passport" | "other";
-  phoneNumber: string;
+  application_id: string;
+  capture_language: "en-us" | "fr-ca" | "es-mx";
+  document_type: "na_dl" | "passport" | "other";
+  phone_number: string;
   signals: string[];
 };
 
@@ -16,19 +16,19 @@ type SignalOption = {
 
 const SMSFlowForm = () => {
   const [formData, setFormData] = useState<FormData>({
-    applicationId: "",
-    language: "en_us",
-    documentType: "na_dl",
-    phoneNumber: "",
+    application_id: "",
+    capture_language: "en-us",
+    document_type: "na_dl",
+    phone_number: "",
     signals: [],
   });
 
   const signalsList: SignalOption[] = [
     { value: "selfie", label: "Selfie" },
-    { value: "barcode", label: "Barcode" },
-    { value: "ocr", label: "OCR" },
-    { value: "document_liveness", label: "Document Liveness" },
-    { value: "ocr_barcode_match", label: "OCR & Barcode Match" },
+    { value: "idcheck", label: "Barcode" },
+    { value: "ocr_scan", label: "OCR" },
+    { value: "document_liveness_idrnd", label: "Document Liveness" },
+    { value: "ocr_match", label: "OCR & Barcode Match" },
   ];
 
   const handleChange = (
@@ -44,7 +44,7 @@ const SMSFlowForm = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/submit-application", {
+      const res = await fetch("http://localhost:5000/api/send-capture-sms", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -73,8 +73,8 @@ const SMSFlowForm = () => {
             Application ID
             <input
               type="text"
-              name="applicationId"
-              value={formData.applicationId}
+              name="application_id"
+              value={formData.application_id}
               onChange={handleChange}
               className="form-input"
               required
@@ -84,8 +84,8 @@ const SMSFlowForm = () => {
           <label className="form-label">
             Language
             <select
-              name="language"
-              value={formData.language}
+              name="capture_language"
+              value={formData.capture_language}
               onChange={handleChange}
               className="form-select"
             >
@@ -98,8 +98,8 @@ const SMSFlowForm = () => {
           <label className="form-label">
             Document Type
             <select
-              name="documentType"
-              value={formData.documentType}
+              name="document_type"
+              value={formData.document_type}
               onChange={handleChange}
               className="form-select"
             >
@@ -115,8 +115,8 @@ const SMSFlowForm = () => {
             Phone Number
             <input
               type="tel"
-              name="phoneNumber"
-              value={formData.phoneNumber}
+              name="phone_number"
+              value={formData.phone_number}
               onChange={handleChange}
               className="form-input"
               required
