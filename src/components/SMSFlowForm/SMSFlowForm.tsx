@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./smsFlowForm.css"; // Import the CSS file
 import formImage from "../../assets/LifesaversHand.png"; // Import the image
+
 type FormData = {
   application_id: string;
   capture_language: "en-us" | "fr-ca" | "es-mx";
@@ -13,6 +14,9 @@ type SignalOption = {
   value: string;
   label: string;
 };
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+const SMS_END_POINT = import.meta.env.VITE_SMS_END_POINT;
 
 const SMSFlowForm = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -44,7 +48,7 @@ const SMSFlowForm = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/send-capture-sms", {
+      const res = await fetch(`${BASE_URL}${SMS_END_POINT}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
