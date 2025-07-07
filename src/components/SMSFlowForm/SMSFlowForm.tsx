@@ -55,6 +55,13 @@ const SMSFlowForm = () => {
       });
       if (res.ok) {
         alert("Form submitted successfully");
+        setFormData({
+          application_id: "",
+          capture_language: "en-us",
+          document_type: "na_dl",
+          phone_number: "",
+          signals: [],
+        });
       } else {
         alert("Submission failed");
       }
